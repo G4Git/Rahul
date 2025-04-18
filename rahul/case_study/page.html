@@ -1,0 +1,394 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Marks Analysis Report</title>
+    <style>* {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body, html {
+        width: 100%;
+        height: 100%;
+        font-family: 'Roboto', sans-serif;
+        background: #f7f7f7;
+        color: #333;
+        padding-top: 60px;
+    }
+    
+    /* Navbar */
+    nav {
+      width: 100%;
+      padding: 25px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #00a5cf;
+      backdrop-filter: blur(10px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: white;
+    }
+    
+    /* Content */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    h1, h2, h3 {
+        color: #2c3e50;
+        margin-bottom: 20px;
+    }
+    
+    h1 {
+        text-align: center;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #00a5cf;
+    }
+    
+    h2 {
+        background-color: #ecf0f1;
+        padding: 12px;
+        border-radius: 6px;
+        margin-top: 30px;
+        border-left: 5px solid #00a5cf;
+        font-size: 22px;
+        font-weight: 600;
+    }
+    
+    h3 {
+        color: #34495e;
+        margin-top: 20px;
+        font-size: 18px;
+    }
+    
+    .query-section {
+        background-color: #ffffff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    
+    .query-box {
+        background-color: #ecf0f1;
+        border-left: 5px solid #00a5cf;
+        padding: 15px;
+        font-family: 'Courier New', Courier, monospace;
+        white-space: pre-wrap;
+        overflow-x: auto;
+        margin: 15px 0;
+        border-radius: 6px;
+        color: #34495e;
+    }
+    
+    .conditions {
+        background-color: #f7f7f7;
+        padding: 15px;
+        border-radius: 6px;
+        margin: 15px 0;
+        border-left: 5px solid #00a5cf;
+    }
+    
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+    }
+    
+    th {
+        background-color: #00a5cf;
+        color: white;
+        text-align: left;
+        padding: 12px;
+    }
+    
+    td {
+        padding: 12px;
+        border-bottom: 1px solid #ddd;
+        background-color: #ffffff;
+        color: #333;
+    }
+    
+    tr:nth-child(even) td {
+        background-color: #ecf0f1;
+    }
+    
+  
+    .note {
+        font-style: italic;
+        color: #7f8c8d;
+        margin-top: 10px;
+    }
+    
+    .scrollable-table {
+        overflow-x: auto;
+        margin-bottom: 20px;
+    }
+    
+    ul {
+        margin-left: 20px;
+    }
+    
+    li {
+        margin-bottom: 5px;
+        color: #34495e;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .navbar {
+            padding: 10px 0;
+        }
+    
+        .container {
+            padding: 15px;
+        }
+    
+        .query-box, .conditions {
+            padding: 10px;
+        }
+    
+        th, td {
+            padding: 8px;
+        }
+    }
+    </style>
+    
+</head>
+<body>
+    <nav>
+        <div class="logo">MyDBMS</div>
+       <ul style="display: flex; list-style: none;">
+        <li ><a style="color: white; text-decoration: none; padding: 10px; font-size: 20px;" href="">Home</a></li>
+        <li><a style="color: white; text-decoration: none; padding: 10px; font-size: 20px;" href=""> Commands</a></li>
+       
+       </ul>
+      </nav>
+
+    <div class="container">
+        <h1>Student Marks Analysis Report</h1>
+        
+        <!-- Complete Student Data Table -->
+        <div class="query-section">
+            <h2>Complete Student Dataset (30 Records)</h2>
+            
+            <div class="scrollable-table">
+                <table>
+                    <tbody><tr>
+                        <th>student_id</th>
+                        <th>student_name</th>
+                        <th>science_marks</th>
+                        <th>maths_marks</th>
+                        <th>english_marks</th>
+                        <th>total_marks</th>
+                        <th>average_marks</th>
+                    </tr>
+                    <tr><td>1</td><td>Aarav</td><td>78</td><td>85</td><td>92</td><td>255</td><td>85.00</td></tr>
+              <tr><td>2</td><td>Aisha</td><td>65</td><td>72</td><td>88</td><td>225</td><td>75.00</td></tr>
+              <tr><td>3</td><td>Arjun</td><td>A</td><td>95</td><td>87</td><td>182</td><td>60.67</td></tr>
+              <tr><td>4</td><td>Priya</td><td>45</td><td>68</td><td>76</td><td>189</td><td>63.00</td></tr>
+              <tr><td>5</td><td>Rohan</td><td>88</td><td>79</td><td>91</td><td>258</td><td>86.00</td></tr>
+              <tr><td>6</td><td>Meera</td><td>72</td><td>82</td><td>65</td><td>219</td><td>73.00</td></tr>
+              <tr><td>7</td><td>kunal</td><td>95</td><td>A</td><td>94</td><td>189</td><td>63.00</td></tr>
+              <tr><td>8</td><td>Ananya</td><td>51</td><td>63</td><td>57</td><td>171</td><td>57.00</td></tr>
+              <tr><td>9</td><td>Siddharth</td><td>84</td><td>77</td><td>82</td><td>243</td><td>81.00</td></tr>
+              <tr><td>10</td><td>Kavya</td><td>67</td><td>71</td><td>A</td><td>138</td><td>46.00</td></tr>
+              <tr><td>11</td><td>Rajesh</td><td>73</td><td>85</td><td>78</td><td>236</td><td>78.67</td></tr>
+              <tr><td>12</td><td>Riya</td><td>59</td><td>62</td><td>81</td><td>202</td><td>67.33</td></tr>
+              <tr><td>13</td><td>Aditya</td><td>91</td><td>94</td><td>89</td><td>274</td><td>91.33</td></tr>
+              <tr><td>14</td><td>Sanya</td><td>82</td><td>76</td><td>84</td><td>242</td><td>80.67</td></tr>
+              <tr><td>15</td><td>Vikram</td><td>A</td><td>73</td><td>65</td><td>138</td><td>46.00</td></tr>
+              <tr><td>16</td><td>Nisha</td><td>77</td><td>88</td><td>92</td><td>257</td><td>85.67</td></tr>
+              <tr><td>17</td><td>Harsh</td><td>56</td><td>64</td><td>71</td><td>191</td><td>63.67</td></tr>
+              <tr><td>18</td><td>Sneha</td><td>89</td><td>91</td><td>95</td><td>275</td><td>91.67</td></tr>
+              <tr><td>19</td><td>Anirush</td><td>63</td><td>57</td><td>62</td><td>182</td><td>60.67</td></tr>
+              <tr><td>20</td><td>Pooja</td><td>74</td><td>82</td><td>79</td><td>235</td><td>78.33</td></tr>
+              <tr><td>21</td><td>Dev</td><td>85</td><td>78</td><td>87</td><td>250</td><td>83.33</td></tr>
+              <tr><td>22</td><td>Ishita</td><td>92</td><td>A</td><td>90</td><td>182</td><td>60.67</td></tr>
+              <tr><td>23</td><td>Pranav</td><td>71</td><td>65</td><td>73</td><td>209</td><td>69.67</td></tr>
+              <tr><td>24</td><td>Neha</td><td>83</td><td>79</td><td>84</td><td>246</td><td>82.00</td></tr>
+              <tr><td>25</td><td>Manish</td><td>58</td><td>62</td><td>59</td><td>179</td><td>59.67</td></tr>
+              <tr><td>26</td><td>Divya</td><td>96</td><td>89</td><td>93</td><td>278</td><td>92.67</td></tr>
+              <tr><td>27</td><td>Saurav</td><td>64</td><td>71</td><td>68</td><td>203</td><td>67.67</td></tr>
+              <tr><td>28</td><td>Swara</td><td>79</td><td>84</td><td>77</td><td>240</td><td>80.00</td></tr>
+              <tr><td>29</td><td>Ishaan</td><td>87</td><td>92</td><td>88</td><td>267</td><td>89.00</td></tr>
+              <tr><td>30</td><td>Tanvi</td><td>72</td><td>68</td><td>75</td><td>215</td><td>71.67</td></tr>
+                </tbody></table>
+            </div>
+            <p class="note">Note: 'A' represents absent marks (treated as 0 in calculations).</p>
+        </div>
+
+        <!-- Section 1: Top 3 Overall Students -->
+        <div class="query-section">
+            <h2>1. Top 3 Overall Students</h2>
+            
+            <div class="conditions">
+                <h3>Conditions:</h3>
+                <ul>
+                    <li>Every subject mark &gt; 60</li>
+                    <li>No absent marks in any subject</li>
+                </ul>
+            </div>
+            
+            <h3>MySQL Query:</h3>
+            <div class="query-box">-- Simple query without window functions
+SELECT student_id, student_name, 
+       science_marks, maths_marks, english_marks,
+       (science_marks + maths_marks + english_marks) AS total_marks,
+       ROUND((science_marks + maths_marks + english_marks)/3, 2) AS average_marks
+FROM students
+WHERE science_marks &gt; 60 AND science_marks != 'A'
+  AND maths_marks &gt; 60 AND maths_marks != 'A'
+  AND english_marks &gt; 60 AND english_marks != 'A'
+ORDER BY total_marks DESC
+LIMIT 3;</div>
+            
+            <h3>Results:</h3>
+            <table>
+                <tbody><tr>
+              <th>student_id</th>
+              <th>student_name</th>
+              <th>science_marks</th>
+              <th>maths_marks</th>
+              <th>english_marks</th>
+              <th>total_marks</th>
+              <th>average_marks</th>
+            </tr>
+            <tr>
+              <td>26</td>
+              <td>Divya</td>
+              <td>96</td>
+              <td>89</td>
+              <td>93</td>
+              <td>278</td>
+              <td>92.67</td>
+            </tr>
+            <tr>
+              <td>18</td>
+              <td>Sneha</td>
+              <td>89</td>
+              <td>91</td>
+              <td>95</td>
+              <td>275</td>
+              <td>91.67</td>
+            </tr>
+            <tr>
+              <td>13</td>
+              <td>Aditya</td>
+              <td>91</td>
+              <td>94</td>
+              <td>89</td>
+              <td>274</td>
+              <td>91.33</td>
+            </tr>
+            </tbody></table>
+            <p class="note">Note: These students have the highest total marks with no subject below 60.</p>
+        </div>
+        
+        <!-- Section 2: Top 3 in Each Subject -->
+        <div class="query-section">
+            <h2>2. Top 3 in Each Subject</h2>
+            
+            <div class="conditions">
+                <h3>Conditions:</h3>
+                <ul>
+                    <li>Rank by subject marks</li>
+                    <li>Use total marks as tiebreaker</li>
+                    <li>Exclude absent marks</li>
+                </ul>
+            </div>
+            
+            <h3>MySQL Queries:</h3>
+            <div class="query-box">-- Science top 3 (simple version)
+SELECT student_name, science_marks AS marks, 
+       (science_marks + maths_marks + english_marks) AS total_marks
+FROM students
+WHERE science_marks != 'A'
+ORDER BY science_marks DESC, total_marks DESC
+LIMIT 3;
+
+-- Maths top 3 (simple version)
+SELECT student_name, maths_marks AS marks, 
+       (science_marks + maths_marks + english_marks) AS total_marks
+FROM students
+WHERE maths_marks != 'A'
+ORDER BY maths_marks DESC, total_marks DESC
+LIMIT 3;
+
+-- English top 3 (simple version)
+SELECT student_name, english_marks AS marks, 
+       (science_marks + maths_marks + english_marks) AS total_marks
+FROM students
+WHERE english_marks != 'A'
+ORDER BY english_marks DESC, total_marks DESC
+LIMIT 3;</div>
+            
+            <h3>Results:</h3>
+            <table>
+                <tbody><tr>
+                    <th>Subject</th>
+                    <th>Rank</th>
+                    <th>Student Name</th>
+                    <th>Marks</th>
+                    <th>Total Marks</th>
+                </tr>
+                <tr><td rowspan="3">SCIENCE</td><td>1</td><td>Divya</td><td>96</td><td>278</td></tr>
+            <tr><td>2</td><td>Kunal</td><td>95</td><td>189</td></tr>
+            <tr><td>3</td><td>Ishita</td><td>92</td><td>182</td></tr>
+            <tr><td rowspan="3">MATHS</td><td>1</td><td>Aditya</td><td>94</td><td>274</td></tr>
+            <tr><td>2</td><td>Ishaan</td><td>92</td><td>267</td></tr>
+            <tr><td>3</td><td>Sneha</td><td>91</td><td>275</td></tr>
+            <tr><td rowspan="3">ENGLISH</td><td>1</td><td>Sneha</td><td>95</td><td>275</td></tr>
+            <tr><td>2</td><td>Kunal</td><td>94</td><td>189</td></tr>
+            <tr><td>3</td><td>Divya</td><td>93</td><td>278</td></tr>
+            </tbody></table>
+            <p class="note">Note: Rankings consider subject marks first, then total marks as tiebreaker.</p>
+        </div>
+        
+        <!-- Section 3: Students with Absent Marks  -->
+        <div class="query-section">
+            <h2>3. Students with Absent Marks</h2>
+            
+            <h3>MySQL Query:</h3>
+            <div class="query-box">-- Simple query to find absent students
+SELECT student_id, student_name,
+       science_marks, maths_marks, english_marks
+FROM students
+WHERE science_marks = 'A' 
+   OR maths_marks = 'A' 
+   OR english_marks = 'A';</div>
+            
+            <h3>Results:</h3>
+            <table>
+                <tbody><tr>
+                    <th>student_id</th>
+                    <th>student_name</th>
+                    <th>science_marks</th>
+                    <th>maths_marks</th>
+                    <th>english_marks</th>
+                </tr>
+                <tr><td>3</td><td>Arjun</td><td>A</td><td>95</td><td>87</td></tr>
+            <tr><td>7</td><td>Kunal</td><td>95</td><td>A</td><td>94</td></tr>
+            <tr><td>10</td><td>Kavya</td><td>67</td><td>71</td><td>A</td></tr>
+            <tr><td>15</td><td>Vikram</td><td>A</td><td>73</td><td>65</td></tr>
+            <tr><td>22</td><td>Ishita</td><td>92</td><td>A</td><td>90</td></tr>
+            </tbody></table>
+            <p class="note">Note: These students were excluded from subject rankings where they were absent.</p>
+        </div>
+    </div>
+
+</body></html>

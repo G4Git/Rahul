@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SQL Commands Reference</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #d9e5f8, #cfdef3);
+      color: #1c1c1c;
+    }
+
+    nav {
+      width: 100%;
+      padding: 15px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    nav .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #004e64;
+    }
+
+    .container {
+      display: flex;
+      padding-top: 80px;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: rgba(255, 255, 255, 0.6);
+      padding: 30px 20px;
+      height: 100vh;
+      position: fixed;
+      top: 80px;
+      left: 0;
+      overflow-y: auto;
+      border-right: 1px solid #ccc;
+    }
+
+    .sidebar a {
+      display: block;
+      padding: 10px 15px;
+      margin-bottom: 10px;
+      text-decoration: none;
+      color: #004e64;
+      font-weight: 500;
+      border-radius: 8px;
+      transition: 0.3s ease;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background-color: #00a5cf;
+      color: white;
+    }
+
+    .content {
+      margin-left: 270px;
+      padding: 40px 30px;
+      flex: 1;
+    }
+
+    .content-section {
+      display: none;
+    
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    h2 {
+      color: #004e64;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      margin-left: 25px;
+    }
+
+    li {
+      margin-bottom: 6px;
+    }
+
+    .command-details {
+      margin-top: 15px;
+      padding: 20px;
+      /* Card background */
+      border-radius: 8px;
+      font-size: 16px;
+      color: rgb(0, 0, 0);
+    }
+
+    .code-block {
+      margin-top: 15px;
+      background-color: #fff4f4c7;
+  
+      padding: 15px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      overflow-x: auto;
+    }
+
+    .input-output {
+      margin-top: 20px;
+    }
+
+    .input-output .input,
+    .input-output .output {
+      background-color: #d9e5f8;
+      color: #004e64;
+      padding: 10px;
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      margin-top: 10px;
+    }
+
+    
+
+    @media (max-width: 768px) {
+      .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .sidebar a {
+        margin: 5px;
+      }
+
+      .content {
+        margin-left: 0;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">MyDBMS</div>
+    <button style="padding: 15px; border-radius: 5px; background: #00a5cf; border: none; font-size:1vw; color: white;">Case Study</button>
+  </nav>
+
+  <div class="container">
+    <div class="sidebar">
+      <a href="#" onclick="showSection('ddl')">DDL</a>
+      <a href="#" onclick="showSection('dml')">DML</a>
+      <a href="#" onclick="showSection('dql')">DQL</a>
+      <a href="#" onclick="showSection('tcl')">TCL</a>
+      <a href="#" onclick="showSection('dcl')">DCL</a>
+      <a href="#" onclick="showSection('plsql')">PL/SQL</a>
+    </div>
+
+    <div class="content">
+        
+
+        <table class="table" style="width: 100%; border-collapse: collapse; margin-top: 20px; font-size: 16px; background-color: white; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); overflow: hidden;">
+            <thead style="background-color: #00a5cf; color: white;">
+              <tr>
+                <th style="padding: 12px; border: 1px solid #ddd;">Type</th>
+                <th style="padding: 12px; border: 1px solid #ddd;">Command</th>
+                <th style="padding: 12px; border: 1px solid #ddd;">Description</th>
+              </tr>
+            </thead>
+            <tbody style="background-color: white;">
+              <!-- DDL Commands -->
+              <tr style="background-color: #f9f9f9;" onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DDL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">CREATE</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Creates new tables, views, or databases.</td>
+              </tr>
+              <tr onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='white'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DDL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">ALTER</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Modifies an existing database object (e.g., table, view).</td>
+              </tr>
+              <tr style="background-color: #f9f9f9;" onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DDL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">DROP</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Deletes tables, views, or databases.</td>
+              </tr>
+              
+              <!-- DML Commands -->
+              <tr onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='white'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DML</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">INSERT</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Adds new data to a table.</td>
+              </tr>
+              <tr style="background-color: #f9f9f9;" onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DML</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">UPDATE</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Modifies existing data in a table.</td>
+              </tr>
+              <tr onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='white'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DML</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">DELETE</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Deletes data from a table.</td>
+              </tr>
+          
+              <!-- DCL Commands -->
+              <tr style="background-color: #f9f9f9;" onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DCL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">GRANT</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Gives user access privileges to database objects.</td>
+              </tr>
+              <tr onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='white'">
+                <td style="padding: 10px; border: 1px solid #ddd;">DCL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">REVOKE</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Removes user access privileges.</td>
+              </tr>
+          
+              <!-- TCL Commands -->
+              <tr style="background-color: #f9f9f9;" onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <td style="padding: 10px; border: 1px solid #ddd;">TCL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">COMMIT</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Saves all changes made during the current transaction.</td>
+              </tr>
+              <tr onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='white'">
+                <td style="padding: 10px; border: 1px solid #ddd;">TCL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">ROLLBACK</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Undoes changes made during the current transaction.</td>
+              </tr>
+              <tr style="background-color: #f9f9f9;" onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='#f9f9f9'">
+                <td style="padding: 10px; border: 1px solid #ddd;">TCL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">SAVEPOINT</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Sets a savepoint within a transaction to allow rolling back to that point.</td>
+              </tr>
+              <tr onmouseover="this.style.backgroundColor='#e0f7fa'" onmouseout="this.style.backgroundColor='white'">
+                <td style="padding: 10px; border: 1px solid #ddd;">TCL</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">SET TRANSACTION</td>
+                <td style="padding: 10px; border: 1px solid #ddd;">Sets the characteristics of the current transaction.</td>
+              </tr>
+          
+            </tbody>
+          </table>
+          
+
+        
+      <div id="ddl" class="content-section active"></div>
+      <div id="dml" class="content-section"></div>
+      <div id="dql" class="content-section"></div>
+      <div id="tcl" class="content-section"></div>
+      <div id="dcl" class="content-section"></div>
+      <div id="plsql" class="content-section"></div>
+    </div>
+  </div>
+
+  <script>
+    
+    const sqlCommands = {
+  ddl: [
+    {
+      name: "CREATE TABLE",
+      description: "The `CREATE TABLE` command is used to create a new table in the database.",
+      example: "CREATE TABLE Students (ID INT, Name VARCHAR(100));",
+      input: "CREATE TABLE Students (ID INT, Name VARCHAR(100));",
+      output: "Table 'Students' created successfully."
+    },
+    {
+      name: "DROP TABLE",
+      description: "The `DROP TABLE` command is used to delete a table from the database.",
+      example: "DROP TABLE Students;",
+      input: "DROP TABLE Students;",
+      output: "Table 'Students' deleted successfully."
+    },
+    {
+      name: "ALTER TABLE",
+      description: "The `ALTER TABLE` command is used to modify an existing table, such as adding or removing columns.",
+      example: "ALTER TABLE Students ADD COLUMN Age INT;",
+      input: "ALTER TABLE Students ADD COLUMN Age INT;",
+      output: "Table 'Students' modified successfully."
+    },
+    {
+      name: "TRUNCATE TABLE",
+      description: "The `TRUNCATE TABLE` command removes all rows from a table, but retains the table structure.",
+      example: "TRUNCATE TABLE Students;",
+      input: "TRUNCATE TABLE Students;",
+      output: "Table 'Students' truncated successfully."
+    },
+    {
+      name: "RENAME TABLE",
+      description: "The `RENAME TABLE` command is used to rename a table in the database.",
+      example: "RENAME Students TO Learners;",
+      input: "RENAME Students TO Learners;",
+      output: "Table renamed from 'Students' to 'Learners'."
+    },
+    {
+      name: "CREATE INDEX",
+      description: "The `CREATE INDEX` command is used to create an index on one or more columns of a table to improve query performance.",
+      example: "CREATE INDEX idx_name ON Students (Name);",
+      input: "CREATE INDEX idx_name ON Students (Name);",
+      output: "Index 'idx_name' created successfully."
+    },
+    {
+      name: "DROP INDEX",
+      description: "The `DROP INDEX` command is used to remove an index from a table.",
+      example: "DROP INDEX idx_name;",
+      input: "DROP INDEX idx_name;",
+      output: "Index 'idx_name' deleted successfully."
+    },
+    {
+      name: "CREATE VIEW",
+      description: "The `CREATE VIEW` command is used to create a virtual table (view) that presents data from one or more tables.",
+      example: "CREATE VIEW StudentView AS SELECT * FROM Students;",
+      input: "CREATE VIEW StudentView AS SELECT * FROM Students;",
+      output: "View 'StudentView' created successfully."
+    },
+    {
+      name: "DROP VIEW",
+      description: "The `DROP VIEW` command is used to remove a view from the database.",
+      example: "DROP VIEW StudentView;",
+      input: "DROP VIEW StudentView;",
+      output: "View 'StudentView' deleted successfully."
+    }
+  ],
+  dml: [
+    {
+      name: "INSERT INTO",
+      description: "The `INSERT INTO` command is used to insert data into a table.",
+      example: "INSERT INTO Students (ID, Name, Age) VALUES (1, 'John', 22);",
+      input: "INSERT INTO Students (ID, Name, Age) VALUES (1, 'John', 22);",
+      output: "1 row inserted."
+    },
+    {
+      name: "INSERT INTO SELECT",
+      description: "The `INSERT INTO SELECT` command is used to insert data selected from another table.",
+      example: "INSERT INTO Students (ID, Name, Age) SELECT ID, Name, Age FROM Alumni;",
+      input: "INSERT INTO Students (ID, Name, Age) SELECT ID, Name, Age FROM Alumni;",
+      output: "2 rows inserted."
+    },
+    {
+      name: "UPDATE",
+      description: "The `UPDATE` command is used to modify existing records in a table.",
+      example: "UPDATE Students SET Age = 23 WHERE ID = 1;",
+      input: "UPDATE Students SET Age = 23 WHERE ID = 1;",
+      output: "1 row updated."
+    },
+    {
+      name: "DELETE",
+      description: "The `DELETE` command is used to remove records from a table.",
+      example: "DELETE FROM Students WHERE ID = 1;",
+      input: "DELETE FROM Students WHERE ID = 1;",
+      output: "1 row deleted."
+    },
+    {
+      name: "MERGE",
+      description: "The `MERGE` command is used to perform an upsert operation, inserting new records or updating existing ones.",
+      example: "MERGE INTO Students AS target USING Alumni AS source ON target.ID = source.ID WHEN MATCHED THEN UPDATE SET target.Age = source.Age WHEN NOT MATCHED THEN INSERT (ID, Name, Age) VALUES (source.ID, source.Name, source.Age);",
+      input: "MERGE INTO Students AS target USING Alumni AS source ON target.ID = source.ID WHEN MATCHED THEN UPDATE SET target.Age = source.Age WHEN NOT MATCHED THEN INSERT (ID, Name, Age) VALUES (source.ID, source.Name, source.Age);",
+      output: "2 rows merged."
+    }
+  ],
+  dql: [
+    {
+      name: "SELECT",
+      description: "The `SELECT` command is used to retrieve data from a table.",
+      example: "SELECT * FROM Students;",
+      input: "SELECT * FROM Students;",
+      output: "ID | Name\n---|-----\n1  | John\n2  | Alice"
+    },
+    {
+      name: "SELECT DISTINCT",
+      description: "The `SELECT DISTINCT` command is used to retrieve unique records from a table.",
+      example: "SELECT DISTINCT Name FROM Students;",
+      input: "SELECT DISTINCT Name FROM Students;",
+      output: "Name\n------\nJohn\nAlice"
+    },
+    {
+      name: "SELECT WHERE",
+      description: "The `SELECT WHERE` command is used to filter records based on conditions.",
+      example: "SELECT * FROM Students WHERE Age > 20;",
+      input: "SELECT * FROM Students WHERE Age > 20;",
+      output: "ID | Name\n---|-----\n1  | John\n2  | Alice"
+    },
+    {
+      name: "SELECT ORDER BY",
+      description: "The `SELECT ORDER BY` command is used to sort the result set based on specified columns.",
+      example: "SELECT * FROM Students ORDER BY Age DESC;",
+      input: "SELECT * FROM Students ORDER BY Age DESC;",
+      output: "ID | Name  | Age\n---|-------|-----\n1  | John  | 22\n2  | Alice | 21"
+    },
+    {
+      name: "SELECT GROUP BY",
+      description: "The `SELECT GROUP BY` command is used to group records by one or more columns.",
+      example: "SELECT Age, COUNT(*) FROM Students GROUP BY Age;",
+      input: "SELECT Age, COUNT(*) FROM Students GROUP BY Age;",
+      output: "Age | COUNT(*)\n----|----------\n21  | 1\n22  | 1"
+    },
+    {
+      name: "SELECT HAVING",
+      description: "The `SELECT HAVING` command is used to filter records after grouping them.",
+      example: "SELECT Age, COUNT(*) FROM Students GROUP BY Age HAVING COUNT(*) > 1;",
+      input: "SELECT Age, COUNT(*) FROM Students GROUP BY Age HAVING COUNT(*) > 1;",
+      output: "Age | COUNT(*)\n----|----------\n21  | 2"
+    },
+    {
+      name: "SELECT JOIN",
+      description: "The `SELECT JOIN` command is used to combine rows from two or more tables based on a related column.",
+      example: "SELECT Students.Name, Courses.Name FROM Students JOIN Enrollments ON Students.ID = Enrollments.StudentID JOIN Courses ON Enrollments.CourseID = Courses.ID;",
+      input: "SELECT Students.Name, Courses.Name FROM Students JOIN Enrollments ON Students.ID = Enrollments.StudentID JOIN Courses ON Enrollments.CourseID = Courses.ID;",
+      output: "Name | Course\n-----|-------\nJohn | Math\nAlice | Science"
+    }
+  ],
+  tcl: [
+    {
+      name: "COMMIT",
+      description: "The `COMMIT` command is used to save all changes made during the current transaction.",
+      example: "COMMIT;",
+      input: "COMMIT;",
+      output: "Transaction committed successfully."
+    },
+    {
+      name: "ROLLBACK",
+      description: "The `ROLLBACK` command is used to undo any changes made during the current transaction.",
+      example: "ROLLBACK;",
+      input: "ROLLBACK;",
+      output: "Transaction rolled back successfully."
+    },
+    {
+      name: "SAVEPOINT",
+      description: "The `SAVEPOINT` command is used to set a savepoint within a transaction.",
+      example: "SAVEPOINT save1;",
+      input: "SAVEPOINT save1;",
+      output: "Savepoint 'save1' created."
+    },
+    {
+      name: "SET TRANSACTION",
+      description: "The `SET TRANSACTION` command is used to set the properties of the current transaction, such as isolation level.",
+      example: "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;",
+      input: "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;",
+      output: "Transaction isolation level set to SERIALIZABLE."
+    }
+  ],
+  dcl: [
+    {
+      name: "GRANT",
+      description: "The `GRANT` command is used to assign privileges to users.",
+      example: "GRANT SELECT ON Students TO user1;",
+      input: "GRANT SELECT ON Students TO user1;",
+      output: "Privileges granted to user1."
+    },
+    {
+      name: "REVOKE",
+      description: "The `REVOKE` command is used to remove privileges from users.",
+      example: "REVOKE SELECT ON Students FROM user1;",
+      input: "REVOKE SELECT ON Students FROM user1;",
+      output: "Privileges revoked from user1."
+    }
+  ],
+  plsql: [
+    {
+      name: "DECLARE Section",
+      description: "The `DECLARE` section is used to define variables, constants, and cursors in PL/SQL.",
+      example: `DECLARE
+  v_student_id INT;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Student ID: ' || v_student_id);
+END;`,
+      input: `DECLARE
+  v_student_id INT;
+BEGIN
+  DBMS_OUTPUT.PUT_LINE('Student ID: ' || v_student_id);
+END;`,
+      output: "Student ID: 0"
+    },
+    {
+      name: "BEGIN-END Block",
+      description: "The `BEGIN-END` block is used to encapsulate executable statements in PL/SQL.",
+      example: `BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello, PL/SQL!');
+END;`,
+      input: `BEGIN
+  DBMS_OUTPUT.PUT_LINE('Hello, PL/SQL!');
+END;`,
+      output: "Hello, PL/SQL!"
+    },
+    {
+      name: "IF Statement",
+      description: "The `IF` statement is used to perform conditional logic in PL/SQL.",
+      example: `BEGIN
+  IF v_student_id = 1 THEN
+    DBMS_OUTPUT.PUT_LINE('Student ID is 1');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Student ID is not 1');
+  END IF;
+END;`,
+      input: `BEGIN
+  IF v_student_id = 1 THEN
+    DBMS_OUTPUT.PUT_LINE('Student ID is 1');
+  ELSE
+    DBMS_OUTPUT.PUT_LINE('Student ID is not 1');
+  END IF;
+END;`,
+      output: "Student ID is not 1"
+    },
+    {
+      name: "LOOP",
+      description: "The `LOOP` command is used to repeatedly execute a block of code.",
+      example: `BEGIN
+  FOR i IN 1..5 LOOP
+    DBMS_OUTPUT.PUT_LINE('Iteration: ' || i);
+  END LOOP;
+END;`,
+      input: `BEGIN
+  FOR i IN 1..5 LOOP
+    DBMS_OUTPUT.PUT_LINE('Iteration: ' || i);
+  END LOOP;
+END;`,
+      output: "Iteration: 1\nIteration: 2\nIteration: 3\nIteration: 4\nIteration: 5"
+    }
+  ]
+};
+
+
+
+    function showSection(id) {
+        const table =document.querySelector(".table")
+        table.style.display="none"
+      const sections = document.querySelectorAll('.content-section');
+      sections.forEach(section => {
+        section.classList.remove('active');
+        
+      });
+
+      const section = document.getElementById(id);
+      section.classList.add('active');
+      section.innerHTML = generateContent(id);
+
+      const links = document.querySelectorAll('.sidebar a');
+      links.forEach(link => {
+        link.classList.remove('active');
+      });
+      event.target.classList.add('active');
+    }
+
+    function generateContent(section) {
+      const commands = sqlCommands[section];
+       const table =document.querySelector(".table")
+        table.style.display="none"
+      return commands.map(command => {
+        return `
+        <div class="command-details" style="width:100%; margin: 20px auto;border: 1px solid #ccc; border-radius: 12px; background-color: #ffffff; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+  <h3 style="font-size: 24px; color: #004e64; font-weight: bold; margin-bottom: 15px;">${command.name}</h3>
+  <p style="font-size: 16px; color: #555555; line-height: 1.6;"><strong>Description:</strong> ${command.description}</p>
+
+  <div class="code-block" style="background-color: #f5f5f5; padding: 20px; border-radius: 10px; border: 1px solid #ddd; margin-top: 20px;">
+    <pre style="background-color: #f1f1f1; border-radius: 8px; padding: 15px; font-family: 'Courier New', monospace; color: #333; overflow-x: auto;">${command.input}</pre>
+  </div>
+
+  <div class="input-output" style="margin-top: 30px;">
+    <div class="input" style="background-color: #d7edff; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #007fa3;">
+      <strong style="margin: 5px; color: black; padding: 8px; border-radius: 5px; font-weight: bold; width: 100%;">Input:</strong>
+      <pre style="background-color: #f1f1f1; border-radius: 8px; padding: 12px; font-family: 'Courier New', monospace; margin-top: 10px; color: #333; border: 1px solid #ccc;">${command.input}</pre>
+    </div>
+
+    <div class="output" style="background-color: #d9edff; padding: 15px; border-radius: 10px; border: 1px solid #007fa3;">
+      <strong style=" color: black; padding: 8px; border-radius: 5px; font-weight: bold; width: 100%;">Output:</strong>
+      <pre style="background-color: white; border-radius: 8px; padding: 12px; font-family: 'Courier New', monospace; margin-top: 10px; color: #333; border: 1px solid #ccc;">${command.output}</pre>
+    </div>
+  </div>
+</div>
+
+        `;
+      }).join('');
+    }
+  </script>
+</body>
+</html>
