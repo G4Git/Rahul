@@ -175,6 +175,9 @@
       <a href="#" onclick="showSection('tcl')">TCL</a>
       <a href="#" onclick="showSection('dcl')">DCL</a>
       <a href="#" onclick="showSection('plsql')">PL/SQL</a>
+      <a href="#" onclick="showSection('join')">JOIN</a>
+      <a href="#" onclick="showSection('constraints')">Constraints</a>
+      <a href="#" onclick="showSection('aggregate')">Aggregate Function</a>
     </div>
 
     <div class="content">
@@ -268,6 +271,9 @@
       <div id="tcl" class="content-section"></div>
       <div id="dcl" class="content-section"></div>
       <div id="plsql" class="content-section"></div>
+      <div id="join" class="content-section"></div>
+      <div id="constraints" class="content-section"></div>
+      <div id="aggregate" class="content-section"></div>
     </div>
   </div>
 
@@ -535,6 +541,108 @@ END;`,
       output: "Iteration: 1\nIteration: 2\nIteration: 3\nIteration: 4\nIteration: 5"
     }
   ]
+  ,
+  join: [
+  {
+    name: "JOIN Clause",
+    description: "The `JOIN` clause is used to combine rows from two or more tables based on a related column.",
+    example: `SELECT students.name, courses.title
+FROM students
+JOIN enrollments ON students.id = enrollments.student_id
+JOIN courses ON enrollments.course_id = courses.id;`,
+    input: `SELECT students.name, courses.title
+FROM students
+JOIN enrollments ON students.id = enrollments.student_id
+JOIN courses ON enrollments.course_id = courses.id;`,
+    output: "John | Math\nAlice | Science\nBob | History"
+  },
+  {
+    name: "LEFT JOIN",
+    description: "The `LEFT JOIN` returns all records from the left table and matched records from the right table. Unmatched right table rows will have NULLs.",
+    example: `SELECT students.name, enrollments.course_id
+FROM students
+LEFT JOIN enrollments ON students.id = enrollments.student_id;`,
+    input: `SELECT students.name, enrollments.course_id
+FROM students
+LEFT JOIN enrollments ON students.id = enrollments.student_id;`,
+    output: "John | 101\nAlice | 102\nCharlie | NULL"
+  }
+],
+
+constraints: [
+  {
+    name: "Constraints",
+    description: "Constraints are rules enforced on data columns to maintain data integrity, such as PRIMARY KEY, FOREIGN KEY, NOT NULL, UNIQUE, and CHECK.",
+    example: `CREATE TABLE students (
+  id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  age INT CHECK (age >= 18)
+);`,
+    input: `CREATE TABLE students (
+  id INT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  age INT CHECK (age >= 18)
+);`,
+    output: "Table 'students' created with constraints on id, name, and age."
+  },
+  {
+    name: "UNIQUE and FOREIGN KEY",
+    description: "The `UNIQUE` constraint ensures all values in a column are different. The `FOREIGN KEY` maintains referential integrity between tables.",
+    example: `CREATE TABLE enrollments (
+  id INT PRIMARY KEY,
+  student_id INT,
+  course_id INT,
+  UNIQUE (student_id, course_id),
+  FOREIGN KEY (student_id) REFERENCES students(id),
+  FOREIGN KEY (course_id) REFERENCES courses(id)
+);`,
+    input: `CREATE TABLE enrollments (
+  id INT PRIMARY KEY,
+  student_id INT,
+  course_id INT,
+  UNIQUE (student_id, course_id),
+  FOREIGN KEY (student_id) REFERENCES students(id),
+  FOREIGN KEY (course_id) REFERENCES courses(id)
+);`,
+    output: "Table 'enrollments' created with unique and foreign key constraints."
+  }
+],
+
+aggregate: [
+  {
+    name: "Aggregate Functions",
+    description: "Aggregate functions perform a calculation on a set of values and return a single value. Common ones include COUNT, SUM, AVG, MAX, and MIN.",
+    example: `SELECT COUNT(*) AS total_students, AVG(age) AS average_age
+FROM students;`,
+    input: `SELECT COUNT(*) AS total_students, AVG(age) AS average_age
+FROM students;`,
+    output: "total_students: 5 | average_age: 21.4"
+  },
+  {
+    name: "GROUP BY with Aggregate",
+    description: "`GROUP BY` is used with aggregate functions to group the result-set by one or more columns.",
+    example: `SELECT course_id, COUNT(*) AS total_enrollments
+FROM enrollments
+GROUP BY course_id;`,
+    input: `SELECT course_id, COUNT(*) AS total_enrollments
+FROM enrollments
+GROUP BY course_id;`,
+    output: "course_id: 101 | total_enrollments: 3\ncourse_id: 102 | total_enrollments: 2"
+  },
+  {
+    name: "HAVING Clause with Aggregate",
+    description: "`HAVING` is used to filter groups based on aggregate values, typically used after `GROUP BY`.",
+    example: `SELECT course_id, COUNT(*) AS total_enrollments
+FROM enrollments
+GROUP BY course_id
+HAVING COUNT(*) > 2;`,
+    input: `SELECT course_id, COUNT(*) AS total_enrollments
+FROM enrollments
+GROUP BY course_id
+HAVING COUNT(*) > 2;`,
+    output: "course_id: 101 | total_enrollments: 3"
+  }
+]
 };
 
 
